@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "fardafan-hr-client-side-solution",
+    "id": "72f4de43-54ae-4e94-8a36-dd21633e23e1",
+    "version": "1.0.0.0"
+  },
+  "paths": {
+    "zippedPackage": "solution/fardafan-hr.sppkg"
+  }
+}

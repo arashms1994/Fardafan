@@ -1,0 +1,10 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "version": "1.6.0",
+    "libraryName": "fardafan-hr",
+    "libraryId": "72f4de43-54ae-4e94-8a36-dd21633e23e1",
+    "environment": "onprem",
+    "packageManager": "npm",
+    "isCreatingSolution": true
+  }
+}

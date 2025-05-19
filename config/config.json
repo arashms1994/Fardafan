@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "entry": "./lib/webparts/fardafan/FardafanWebPart.js",
+      "manifest": "./src/webparts/fardafan/FardafanWebPart.manifest.json",
+      "outputPath": "./dist/fardafan-web-part.js"
+    }
+  ],
+  "externals": {},
+  "localizedResources": {
+    "FardafanWebPartStrings": "webparts/fardafan/loc/{locale}.js"
+  }
+}
