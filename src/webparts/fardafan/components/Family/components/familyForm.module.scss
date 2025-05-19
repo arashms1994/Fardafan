@@ -1,0 +1,30 @@
+.familyFormContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 30px;
+  justify-content: center;
+  align-items: end;
+  gap: 3.5px;
+  width: 50%;
+  h1 {
+    font-size: 13px;
+    background-color: rgb(80, 78, 78);
+    padding: 2px 7px;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+  }
+  label {
+    font-weight: bolder;
+  }
+  input {
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 3.5px 5px;
+    direction: rtl;
+    background-color: rgb(236, 228, 228);
+    font-weight: bolder;
+    width: 100%;
+  }
+}

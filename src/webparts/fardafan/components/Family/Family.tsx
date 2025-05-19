@@ -3,9 +3,14 @@ import * as React from "react";
 import { IFardafanProps } from "./IFardafanProps";
 import { escape } from "@microsoft/sp-lodash-subset";
 import styles from "./Fardafan.module.scss";
+import FamilyForm from "./components/familyForm";
 
 export default class Family extends React.Component<IFardafanProps, {}> {
   public render(): React.ReactElement<IFardafanProps> {
-    return <div className={styles.test}>Family</div>;
+    return (
+      <div className={styles.test}>
+        <FamilyForm GUID="123456" />
+      </div>
+    );
   }
 }
