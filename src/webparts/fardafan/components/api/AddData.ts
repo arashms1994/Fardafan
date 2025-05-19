@@ -1,51 +1,56 @@
-// import { getDigest } from "./GetDigest";
+import { getDigest } from "./GetDigest";
 
-// export async function addPersonalInfo(
-//   title: string,
-//   setState: (state: any) => void,
-//   onReload: () => void
-// ) {
-//   const listName = "HRPersonalInfo";
-//   const webUrl = "http://sharepoint.fardafan.com";
+export async function addPersonalInfo(
+  formData: any,
+  setState: (state: any) => void,
+  onReload: () => void
+) {
+  const listGuid = "7B569242-13A5-9548-FAA0-C1E18F03AC7646";
+  const webUrl = "http://sharepoint.fardafan.com";
 
-//   if (!title.trim()) {
-//     setState({ message: "لطفاً یک عنوان وارد کنید." });
-//     return;
-//   }
+  if (!formData.Title || !formData.Title.trim()) {
+    setState({ message: "لطفاً یک عنوان وارد کنید." });
+    return;
+  }
 
-//   try {
-//     const digest = await getDigest();
+  try {
+    const digest = await getDigest();
 
-//     const resType = await fetch(
-//       `${webUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`,
-//       {
-//         headers: { Accept: "application/json;odata=verbose" },
-//       }
-//     );
-//     const dataType = await resType.json();
-//     const itemType = dataType.d.ListItemEntityTypeFullName;
+    const resType = await fetch(
+      `${webUrl}/_api/web/lists(guid'${listGuid}')?$select=ListItemEntityTypeFullName`,
+      {
+        headers: { Accept: "application/json;odata=verbose" },
+      }
+    );
+    const dataType = await resType.json();
+    const itemType = dataType.d.ListItemEntityTypeFullName;
 
-//     const response = await fetch(`${webUrl}/_api/web/lists/getbytitle('${listName}')/items`, {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json;odata=verbose",
-//         "Content-Type": "application/json;odata=verbose",
-//         "X-RequestDigest": digest,
-//       },
-//       body: JSON.stringify({
-//         __metadata: { type: itemType },
-//         Title: title,
-//       }),
-//     });
+    const itemBody = {
+      __metadata: { type: itemType },
+      ...formData,
+    };
 
-//     if (!response.ok) {
-//       const errorData = await response.json();
-//       throw new Error(errorData.error.message.value);
-//     }
+    const response = await fetch(
+      `${webUrl}/_api/web/lists(guid'${listGuid}')/items`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json;odata=verbose",
+          "Content-Type": "application/json;odata=verbose",
+          "X-RequestDigest": digest,
+        },
+        body: JSON.stringify(itemBody),
+      }
+    );
 
-//     setState({ message: `آیتم جدید (${title}) اضافه شد.`, title: "" });
-//     onReload();
-//   } catch (err: any) {
-//     setState({ message: `خطا: ${err.message}` });
-//   }
-// }
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error.message.value);
+    }
+
+    setState({ message: `آیتم جدید (${formData.Title}) اضافه شد.`, Title: "" });
+    onReload();
+  } catch (err) {
+    setState({ message: `خطا: ${(err as any).message}` });
+  }
+}

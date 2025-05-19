@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
   "port": 4321,
-  "https": false,
-  "initialPage": "http://sharepoint.fardafan.com/appc/_layouts/15/workbench.aspx",
+  "https": true,
+  "initialPage": "http://sharepoint.fardafan.com/hr/_layouts/15/workbench.aspx",
   "api": {
     "port": 5432,
     "entryPath": "node_modules/@microsoft/sp-webpart-workbench/lib/api/"
