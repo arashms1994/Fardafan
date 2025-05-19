@@ -5,8 +5,8 @@ export async function addPersonalInfo(
   setState: (state: any) => void,
   onReload: () => void
 ) {
-  const listGuid = "7B569242-13A5-9548-FAA0-C1E18F03AC7646";
-  const webUrl = "http://sharepoint.fardafan.com";
+  const listGuid = "56924213-A595-48FA-A0C1-E18F03AC7646";
+  const webUrl = "http://sharepoint.fardafan.com/HR";
 
   if (!formData.Title || !formData.Title.trim()) {
     setState({ message: "لطفاً یک عنوان وارد کنید." });
@@ -29,6 +29,8 @@ export async function addPersonalInfo(
       __metadata: { type: itemType },
       ...formData,
     };
+    console.log("Sending itemBody:", JSON.stringify(itemBody, null, 2));
+    console.log("Item Type:", itemType);
 
     const response = await fetch(
       `${webUrl}/_api/web/lists(guid'${listGuid}')/items`,
@@ -45,6 +47,7 @@ export async function addPersonalInfo(
 
     if (!response.ok) {
       const errorData = await response.json();
+      console.error("SharePoint Error:", errorData);
       throw new Error(errorData.error.message.value);
     }
 

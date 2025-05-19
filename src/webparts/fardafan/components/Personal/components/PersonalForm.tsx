@@ -126,7 +126,7 @@ export default class PersonalForm extends React.Component<any, any> {
         await updatePersonalInfo(
           currentItemId,
           formData,
-          (msg: string) => this.setState({ message: msg }),
+          (stateUpdate: any) => this.setState(stateUpdate),
           () => {
             if (this.props.onReload) this.props.onReload();
             this.setState({
@@ -169,7 +169,12 @@ export default class PersonalForm extends React.Component<any, any> {
               type="text"
               id={field.name}
               name={field.name}
-              value={this.state[field.name as keyof any] || ""}
+              value={
+                this.state[field.name] === null ||
+                this.state[field.name] === undefined
+                  ? ""
+                  : this.state[field.name]
+              }
               onChange={this.handleChange}
             />
           </div>

@@ -6,8 +6,8 @@ export async function updatePersonalInfo(
   setState: (state: any) => void,
   onReload: () => void
 ) {
-  const listName = "HRPersonalInfo";
-  const webUrl = "http://sharepoint.fardafan.com";
+  const listGuid = "56924213-A595-48FA-A0C1-E18F03AC7646";
+  const webUrl = "http://sharepoint.fardafan.com/HR";
 
   if (!formData.Title || !formData.Title.trim()) {
     setState({ message: "لطفاً یک عنوان وارد کنید." });
@@ -18,7 +18,7 @@ export async function updatePersonalInfo(
     const digest = await getDigest();
 
     const resType = await fetch(
-      `${webUrl}/_api/web/lists/getbytitle('${listName}')?$select=ListItemEntityTypeFullName`,
+      `${webUrl}/_api/web/lists(guid'${listGuid}')?$select=ListItemEntityTypeFullName`,
       {
         headers: { Accept: "application/json;odata=verbose" },
       }
@@ -32,7 +32,7 @@ export async function updatePersonalInfo(
     };
 
     const response = await fetch(
-      `${webUrl}/_api/web/lists/getbytitle('${listName}')/items(${currentItemId})`,
+      `${webUrl}/_api/web/lists(guid'${listGuid}')/items(${currentItemId})`,
       {
         method: "POST",
         headers: {
@@ -54,6 +54,6 @@ export async function updatePersonalInfo(
     setState({ message: `آیتم (${formData.Title}) با موفقیت به‌روزرسانی شد.` });
     onReload();
   } catch (err) {
-    setState({ message: `خطا: ${err.message}` });
+    setState({ message: `خطا: ${(err as any).message}` });
   }
 }
