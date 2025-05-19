@@ -1,31 +1,29 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
+import * as React from "react";
+import * as ReactDom from "react-dom";
+import { Version } from "@microsoft/sp-core-library";
 import {
   BaseClientSideWebPart,
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
-} from '@microsoft/sp-webpart-base';
+  PropertyPaneTextField,
+} from "@microsoft/sp-webpart-base";
 
-import * as strings from 'FardafanWebPartStrings';
-import Fardafan from './components/Fardafan';
-import { IFardafanProps } from './components/IFardafanProps';
+import * as strings from "FardafanWebPartStrings";
+import Fardafan from "./components/Fardafan";
+import { IFardafanProps } from "./components/IFardafanProps";
+import AppRouter from "./Router/AppRouter";
 
 export interface IFardafanWebPartProps {
   description: string;
 }
 
 export default class FardafanWebPart extends BaseClientSideWebPart<IFardafanWebPartProps> {
-
   public render(): void {
-    const element: React.ReactElement<IFardafanProps > = React.createElement(
-      Fardafan,
-      {
-        description: this.properties.description
-      }
+    ReactDom.render(
+      React.createElement(AppRouter, {
+        description: this.properties.description,
+      }),
+      this.domElement
     );
-
-    ReactDom.render(element, this.domElement);
   }
 
   protected onDispose(): void {
@@ -33,7 +31,7 @@ export default class FardafanWebPart extends BaseClientSideWebPart<IFardafanWebP
   }
 
   protected get dataVersion(): Version {
-    return Version.parse('1.0');
+    return Version.parse("1.0");
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
@@ -41,20 +39,20 @@ export default class FardafanWebPart extends BaseClientSideWebPart<IFardafanWebP
       pages: [
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: strings.PropertyPaneDescription,
           },
           groups: [
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                })
-              ]
-            }
-          ]
-        }
-      ]
+                PropertyPaneTextField("description", {
+                  label: strings.DescriptionFieldLabel,
+                }),
+              ],
+            },
+          ],
+        },
+      ],
     };
   }
 }
