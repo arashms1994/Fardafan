@@ -3,46 +3,62 @@
 }
 
 .Header {
-  background-color: rgb(37, 37, 37);
+  background-color: rgb(24, 24, 24);
   width: 100%;
-  height: 70px;
-  padding: 20px 16px;
+  padding-top: 20px;
   color: rgb(243, 243, 243);
   border-radius: 12px 12px 0 0;
   text-align: right;
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  gap: 15px;
+  .pageTitle {
+    font-size: 17px;
+    color: black;
+  }
 }
 
 .actionsContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   gap: 10px;
 
   .btn {
-    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: white;
+    transition: all 300ms linear;
+    padding: 8px 8px;
+    border-top-left-radius: 8.5px;
+    border-top-right-radius: 8.5px;
+    font-weight: bolder;
+    border: none;
+    background-color: rgb(77, 77, 77);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
+  .activeBtn {
     height: 40px;
     cursor: pointer;
     transition: all 300ms linear;
     padding: 8px 8px;
-    border-radius: 8.5px;
+    border-top-left-radius: 8.5px;
+    border-top-right-radius: 8.5px;
+    background-color: white;
     font-weight: bolder;
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5px;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-
-    &:hover {
-      scale: 105%;
-      background-color: black;
-      color: white;
-    }
   }
 }
-
