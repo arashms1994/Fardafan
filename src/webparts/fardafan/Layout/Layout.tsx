@@ -66,7 +66,7 @@ export class Layout extends React.Component<any, any> {
               اطلاعات شغلی
             </button>
             <button onClick={this.goPe} className={this.getButtonClass("/")}>
-              اطلاعات عمومی
+              اطلاعات شخصی
             </button>
           </div>
         </header>

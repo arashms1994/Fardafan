@@ -1,14 +1,18 @@
 export async function loadPersonalInfo(): Promise<any[]> {
-  const webUrl = "http://sharepoint.fardafan.com";
-  const listName = "HRPersonalInfo";
+  const listGuid = "56924213-a595-48fa-a0c1-e18f03ac7646";
+  const webUrl = "http://sharepoint.fardafan.com/HR";
 
   try {
     const response = await fetch(
-      `${webUrl}/_api/web/lists/getbytitle('${listName}')/items`,
+      `${webUrl}/_api/web/lists(guid'${listGuid}')?$select=ListItemEntityTypeFullName`,
       {
         headers: { Accept: "application/json;odata=verbose" },
       }
     );
+
+    if (!response.ok) {
+      throw new Error(`خطا در دریافت داده‌ها: ${response.statusText}`);
+    }
 
     const data = await response.json();
     return data.d.results;

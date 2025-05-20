@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Component } from "react";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
-
 import { Layout } from "../Layout/Layout";
 import Fardafan from "../components/Fardafan";
 import Experience from "../components/Experience/Experience";
