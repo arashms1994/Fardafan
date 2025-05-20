@@ -3,7 +3,8 @@ import { getDigest } from "./GetDigest";
 export async function addPersonalInfo(
   formData: any,
   setState: (state: any) => void,
-  onReload: () => void
+  onReload: () => void,
+  GUID0: any
 ) {
   const listGuid = "56924213-A595-48FA-A0C1-E18F03AC7646";
   const webUrl = "http://sharepoint.fardafan.com/HR";
@@ -25,10 +26,14 @@ export async function addPersonalInfo(
     const dataType = await resType.json();
     const itemType = dataType.d.ListItemEntityTypeFullName;
 
-    const itemBody = {
+    const itemBody: any = {
       __metadata: { type: itemType },
-      ...formData,
     };
+
+    if (GUID0) {
+      itemBody["GUID0"] = GUID0;
+    }
+
     console.log("Sending itemBody:", JSON.stringify(itemBody, null, 2));
     console.log("Item Type:", itemType);
 

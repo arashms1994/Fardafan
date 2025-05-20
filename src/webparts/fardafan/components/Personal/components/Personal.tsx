@@ -1,7 +1,8 @@
 import * as React from "react";
-import styles from "./PersonalForm.module.scss";
+import styles from "./Personal.module.scss";
 import { updatePersonalInfo } from "../../api/UpdateData";
 import { addPersonalInfo } from "../../api/AddData";
+import Guid from "../../utils/CreateGuid";
 
 export default class PersonalForm extends React.Component<any, any> {
   numericFields = [
@@ -73,7 +74,7 @@ export default class PersonalForm extends React.Component<any, any> {
       insuranceHistory: "",
       insuranceNumber: 0,
       supplementaryInsurance: "",
-      supplementaryInsuranceDependents: 0,
+      supplementaryInsuranceDepents: 0,
       maritalStatus: "",
       marriageDate: "",
       address: "",
@@ -86,6 +87,7 @@ export default class PersonalForm extends React.Component<any, any> {
       email: "",
       isEditing: false,
       currentItemId: null,
+      GUID0: Guid(),
       message: "",
     };
 
@@ -105,17 +107,20 @@ export default class PersonalForm extends React.Component<any, any> {
   async handleSubmit(e: any) {
     e.preventDefault();
 
-    const { Title, isEditing, currentItemId, ...restData } = this.state;
+    const { Title, isEditing, currentItemId } = this.state;
 
     if (!Title.trim()) {
       this.setState({ message: "لطفاً یک عنوان وارد کنید." });
       return;
     }
 
-    const formData = {
+    const formData: any = {
       Title,
-      ...restData,
     };
+
+    this.fields.forEach((field) => {
+      formData[field.name] = this.state[field.name];
+    });
 
     if (isEditing) {
       if (!currentItemId) {
@@ -144,16 +149,54 @@ export default class PersonalForm extends React.Component<any, any> {
       try {
         await addPersonalInfo(
           formData,
-          (msg: string) => this.setState({ message: msg }),
+          (stateUpdate: any) => this.setState(stateUpdate),
           () => {
             if (this.props.onReload) this.props.onReload();
-            this.setState({ Title: "", message: "" });
-          }
+            this.setState({
+              Title: "",
+              lastName: "",
+              coNumber: "",
+              birthDate: "",
+              nationalNumber: 0,
+              idNumber: 0,
+              birthPlace: "",
+              placeOfIssue: "",
+              gender: "",
+              religion: "",
+              denomination: "",
+              militaryStatus: "",
+              endDateOfMilitary: "",
+              typeOfMilitaryExeption: "",
+              typeOfDriverLicense: "",
+              passportNumber: 0,
+              insuranceHistory: "",
+              insuranceNumber: 0,
+              supplementaryInsurance: "",
+              supplementaryInsuranceDependents: 0,
+              maritalStatus: "",
+              marriageDate: "",
+              address: "",
+              postalCode: 0,
+              housingStatus: "",
+              distanceToWork: "",
+              vehicle: "",
+              homePhoneNumber: 0,
+              personalPhoneNumber: 0,
+              email: "",
+              message: "",
+            });
+          },
+            this.state.GUID0 
         );
       } catch (error) {
         this.setState({ message: `خطا در اضافه کردن: ${error}` });
       }
     }
+  }
+
+  async componentDidMount() {
+    const GUID0 = Guid();
+    this.setState({ GUID0 });
   }
 
   render() {
@@ -184,9 +227,9 @@ export default class PersonalForm extends React.Component<any, any> {
           {this.state.isEditing ? "ویرایش" : "افزودن"}
         </button>
 
-        {this.state.message && (
+        {/* {this.state.message && (
           <div className={styles.message}>{this.state.message}</div>
-        )}
+        )} */}
       </form>
     );
   }
