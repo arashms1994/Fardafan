@@ -1,12 +1,7 @@
 import * as React from "react";
 import FamilyForm from "./components/FamilyForm";
 import styles from "./Fardafan.module.scss";
-
-interface FamilyState {
-  formsData: { [guid: string]: any };
-  formsOrder: { guid: string; relation: string; rowNumber: number }[];
-  newRelation: string;
-}
+import { getDigest } from "../api/GetDigest";
 
 const DEFAULT_RELATIONS = ["همسر", "فرزند", "پدر", "مادر", "خواهر", "برادر"];
 let formCounter = 100;
@@ -51,23 +46,9 @@ export default class Family extends React.Component<any, any> {
     this.setState({ newRelation: e.currentTarget.value });
   };
 
-  getDigest = async (): Promise<string> => {
-    const response = await fetch(
-      `http://sharepoint.fardafan.com/HR/_api/contextinfo`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json;odata=verbose",
-        },
-      }
-    );
-    const json = await response.json();
-    return json.d.GetContextWebInformation.FormDigestValue;
-  };
-
   handleSubmitAll = async (): Promise<void> => {
     const webUrl = "http://sharepoint.fardafan.com/HR";
-    const digest = await this.getDigest();
+    const digest = await getDigest();
     const data = this.state.formsData;
 
     for (const guid in data) {
