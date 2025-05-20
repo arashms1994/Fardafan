@@ -1,9 +1,3 @@
-export interface familyFormProps {
-  GUID: string;
-  relation: string;
-  onDataChange?: (guid: string, data: any) => void;
-}
-
 export interface FamilyFormState {
   fullName: string;
   birthDate: Date | null;
@@ -11,4 +5,18 @@ export interface FamilyFormState {
   education: string;
   phoneNumber: string;
   relation: string;
+}
+
+export interface FormField {
+  key: string;
+  label: string;
+  type: string;
+}
+
+export interface familyFormProps {
+  GUID: string;
+  relation: string;
+  fields: FormField[];
+  rowNumber: number;
+  onDataChange: (guid: string, data: any) => void;
 }
